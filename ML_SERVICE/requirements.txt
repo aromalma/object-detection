@@ -2,5 +2,5 @@ opencv-python==4.10.0.84
 numpy==1.23.5
 opencv_draw_annotation==0.1.1
 pillow==10.2.0
-Flask==3.1.0
+Flask==3.0.3
 
