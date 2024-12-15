@@ -3,31 +3,31 @@ version: '3.8'
 services: 
   mlservice:
     build:
-      context: ./ML_SERVICE
-      dockerfile: Dockerfile
+      context: ./ML_SERVICE  # Path to the ML_SERVICE directory containing the Dockerfile
+      dockerfile: Dockerfile  # Specify the Dockerfile for building the mlservice image
     ports:
-      - "8011:8011"
+      - "8011:8011"  # Expose mlservice on port 8011 (host:container)
     networks:
-      - mynetwork
+      - mynetwork  # Connect mlservice to the custom bridge network
     deploy:
       resources:
         reservations:
           devices:
-          - driver: nvidia
-            count: 1
-            capabilities: [gpu]
+          - driver: nvidia  # Specify the NVIDIA GPU driver for this service
+            count: 1  # Reserve one GPU for this service
+            capabilities: [gpu]  # Ensure GPU capability is available
 
   uiservice:
     build:
-      context: ./UI_SERVICE
-      dockerfile: Dockerfile
+      context: ./UI_SERVICE  # Path to the UI_SERVICE directory containing the Dockerfile
+      dockerfile: Dockerfile  # Specify the Dockerfile for building the uiservice image
     ports:
-      - "8010:8010"
+      - "8010:8010"  # Expose uiservice on port 8010 (host:container)
     environment:
-      - ML_SERVICE_URL=http://mlservice:8011
+      - ML_SERVICE_URL=http://mlservice:8011  # Internal URL for mlservice, accessible within the network
     networks:
-      - mynetwork
+      - mynetwork  # Connect uiservice to the custom bridge network
 
 networks:
   mynetwork:
-    driver: bridge
+    driver: bridge  # Use the bridge driver to create an isolated network for these services
