@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Image</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: #0056b3;
+            color: #fff;
+            padding: 1rem;
+            text-align: center;
+        }
+        main {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .upload-container {
+            background: #fff;
+            padding: 2rem;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 300px;
+        }
+        .upload-container h1 {
+            margin-bottom: 1.5rem;
+            font-size: 1.5rem;
+            color: #0056b3;
+        }
+        .upload-container input[type="file"] {
+            display: block;
+            margin: 1rem auto;
+        }
+        .upload-container input[type="submit"] {
+            background-color: #0056b3;
+            color: #fff;
+            border: none;
+            padding: 0.5rem 1rem;
+            font-size: 1rem;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .upload-container input[type="submit"]:hover {
+            background-color: #004094;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Object Detection Portal</h1>
+    </header>
+    <main>
+        <div class="upload-container">
+            <h1>Upload Your Image</h1>
+            <form action="/upload" method="POST" enctype="multipart/form-data">
+                <input type="file" name="image" accept="image/*">
+                <input type="submit" value="Upload">
+            </form>
+        </div>
+    </main>
+</body>
+</html>
+
+

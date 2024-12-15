@@ -1,0 +1,5 @@
+opencv-python
+numpy
+pillow
+flask
+opencv_draw_annotation

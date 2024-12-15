@@ -1,0 +1,33 @@
+version: '3.8'
+
+services: 
+  mlservice:
+    build:
+      context: ./ML_SERVICE
+      dockerfile: Dockerfile
+    ports:
+      - "8011:8011"
+    networks:
+      - mynetwork
+    deploy:
+      resources:
+        reservations:
+          devices:
+          - driver: nvidia
+            count: 1
+            capabilities: [gpu]
+
+  uiservice:
+    build:
+      context: ./UI_SERVICE
+      dockerfile: Dockerfile
+    ports:
+      - "8010:8010"
+    environment:
+      - ML_SERVICE_URL=http://mlservice:8011
+    networks:
+      - mynetwork
+
+networks:
+  mynetwork:
+    driver: bridge
