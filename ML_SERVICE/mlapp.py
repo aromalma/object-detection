@@ -15,6 +15,7 @@ app = Flask(__name__)
 
 class detection:
     def __init__(self,):
+        # check for cuda availablilty
         if torch.cuda.is_available():
             self.device = 'cuda'
         else:
@@ -37,23 +38,26 @@ def detectimg():
         img = request.files['image']
         img = np.frombuffer(img.read(), np.uint8)
         
-
+        
         img = cv2.imdecode(img, cv2.IMREAD_COLOR)
         img = cv2.cvtColor(img, cv2.COLOR_BGR2RGB) 
         names = obj.model.names
-        
+
+        # only one thread to access at a time
         with lock :
             result = []
             res = obj.detect(img.copy())
             print(res)
+            # move to cpu before conveting to numpy array
             res_box = res[0].boxes.cpu().numpy()
             iterate = zip(res_box.cls.astype(int),res_box.conf.astype(float),res_box.xyxy.astype(int))
+            # draw bbounding box and create json
             for cls_name ,confidence, bbox in iterate:
                 b = bbox.tolist()
                 result.append({"class":names[cls_name],"conf":confidence,"bxyxy":b})
                 draw_bounding_box(img, b, labels=[names[cls_name]],
                     color='green')
-            
+            # prepare to send response back
             img = Image.fromarray(img.astype("uint8"))
             rawBytes = io.BytesIO()
             img.save(rawBytes, "JPEG")
