@@ -3,8 +3,7 @@ from flask import Flask, request, render_template,  Response,jsonify,send_file,r
 import requests
 import numpy as np
 import os
-# from opencv_draw_annotation import draw_bounding_box
-# import cv2
+
 
 app = Flask(__name__)
 ML_SERVICE_URL = os.getenv("ML_SERVICE_URL", "http://mlservice:8011")
@@ -71,11 +70,9 @@ def detect():
         text = resp["json"]
         image = resp["image"]
 
-
+        #Dispaly results
         return render_template_string(html_template, text=text, image=image)
-        # return str(len(eval(response.content["json"]))),200
-        
-        # return (response.content, response.status_code, response.headers.items())
+
     except requests.exceptions.RequestException as e:
         return jsonify({"error": "Failed to connect to target server", "details": str(e)}), 500
 
