@@ -1,5 +1,2 @@
-flask
-opencv-python
-pandas
-requests
-opencv_draw_annotation
+Flask==3.1.0
+requests==2.32.3
